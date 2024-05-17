@@ -2,6 +2,9 @@ const TelegramBot = require('node-telegram-bot-api');
 const { query } = require('./utils/ai');
 const logger = require('./utils/logger');
 require('dotenv').config();
+const express = require('express');
+
+const app = express();
 
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
@@ -24,4 +27,12 @@ bot.on('message', async (msg) => {
         logger.error(error);
         bot.sendMessage(chatId, 'Desculpe, não consigo responder a sua pergunta. Podemos tentar outra vez');
     }
+});
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.listen(process.env.PORT, () => {
+    logger.info(`Server running on port ${process.env.PORT}`);
 });
