@@ -6,6 +6,9 @@ require('dotenv').config();
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
 bot.on('message', async (msg) => {
+    if (!msg.text.startsWith('!bot')) 
+        return;
+    
     const chatId = msg.chat.id;
     const messageText = msg.text;
     
